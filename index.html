@@ -4,24 +4,59 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Single Page App for GitHub Pages -->
+    <!-- GitHub Pages SPA routing script (only for GitHub Pages) -->
     <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
-      // This script checks to see if a redirect is present in the query string,
-      // converts it back into the correct url and adds it to the
-      // browser's history using window.history.replaceState(...)
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location))
+      // Only apply GitHub Pages routing script if we're on GitHub Pages
+      if (window.location.hostname.includes('github.io')) {
+        // Single Page Apps for GitHub Pages
+        // MIT License
+        // https://github.com/rafgraph/spa-github-pages
+        (function(l) {
+          if (l.search[1] === '/' ) {
+            var decoded = l.search.slice(1).split('&').map(function(s) { 
+              return s.replace(/~and~/g, '&')
+            }).join('?');
+            window.history.replaceState(null, null,
+                l.pathname.slice(0, -1) + decoded + l.hash
+            );
+          }
+        }(window.location))
+      }
+    </script>
+    
+    <!-- Dynamic Meta Tags -->
+    <script type="text/javascript">
+      // Set dynamic URLs based on deployment
+      (function() {
+        var isGitHub = window.location.hostname.includes('github.io');
+        var baseUrl = isGitHub 
+          ? 'https://yadavkhushwant.github.io/portfolio'
+          : 'https://khushwantyadav.me';
+        
+        // Update Open Graph URL
+        var ogUrl = document.createElement('meta');
+        ogUrl.property = 'og:url';
+        ogUrl.content = baseUrl;
+        document.head.appendChild(ogUrl);
+        
+        // Update Open Graph Image
+        var ogImage = document.createElement('meta');
+        ogImage.property = 'og:image';
+        ogImage.content = baseUrl + '/og-image.png';
+        document.head.appendChild(ogImage);
+        
+        // Update Twitter Image
+        var twitterImage = document.createElement('meta');
+        twitterImage.name = 'twitter:image';
+        twitterImage.content = baseUrl + '/og-image.png';
+        document.head.appendChild(twitterImage);
+        
+        // Update canonical URL
+        var canonical = document.createElement('link');
+        canonical.rel = 'canonical';
+        canonical.href = baseUrl;
+        document.head.appendChild(canonical);
+      })();
     </script>
     
     <!-- SEO Meta Tags -->
@@ -35,8 +70,6 @@
     <meta property="og:title" content="Khushwant Pratap Yadav - Software Development Engineer" />
     <meta property="og:description" content="Experienced Backend Developer with expertise in Java, Spring Boot, and AI technologies. Building scalable enterprise applications and AI-powered solutions." />
     <meta property="og:type" content="website" />
-    <!-- <meta property="og:url" content="https://khushwant-yadav.github.io/portfolio" />
-    <meta property="og:image" content="https://khushwant-yadav.github.io/portfolio/src/assets/images/profile.jpg" /> -->
     <meta property="og:site_name" content="Khushwant Yadav Portfolio" />
     
     <!-- Twitter Card Meta Tags -->

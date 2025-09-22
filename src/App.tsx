@@ -23,9 +23,22 @@ const PageLoader = () => (
 )
 
 function App() {
+  // Determine the base path based on deployment environment
+  const getBasename = () => {
+    if (import.meta.env.DEV) return '/'
+    
+    // Check if we're on GitHub Pages
+    if (window.location.hostname.includes('github.io')) {
+      return '/portfolio/'
+    }
+    
+    // For custom domain (nginx) - khushwantyadav.me
+    return '/'
+  }
+
   return (
     <ThemeProvider>
-      <Router basename="">
+      <Router basename={getBasename()}>
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
           <Header />
           <main className="flex-1">
