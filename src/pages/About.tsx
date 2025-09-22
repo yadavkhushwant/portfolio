@@ -1,4 +1,5 @@
 import React from 'react'
+import ThemeDemo from '../components/ThemeDemo'
 
 const About: React.FC = () => {
   return (
@@ -152,6 +153,11 @@ const About: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Theme Demo Section */}
+        <div className="mt-16">
+          <ThemeDemo />
         </div>
       </div>
     </div>

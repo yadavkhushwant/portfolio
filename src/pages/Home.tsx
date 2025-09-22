@@ -1,4 +1,5 @@
 import React from 'react'
+import DarkModeTest from '../components/DarkModeTest'
 
 const Home: React.FC = () => {
   return (
@@ -221,6 +222,10 @@ const Home: React.FC = () => {
           </a>
         </div>
       </section>
+      {/* Dark Mode Test - Temporary */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <DarkModeTest />
+      </div>
     </div>
   )
 }

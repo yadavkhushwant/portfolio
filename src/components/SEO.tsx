@@ -10,13 +10,7 @@ interface SEOProps {
   canonicalUrl?: string
 }
 
-const SEO: React.FC<SEOProps> = ({
-  title = 'Khushwant Pratap Yadav - Software Development Engineer',
-  description = 'Experienced Software Development Engineer specializing in Java, Spring Boot, AI technologies, and backend development. 3+ years of experience building enterprise applications, chatbots, and AI-powered solutions.',
-  keywords = 'Software Engineer, Backend Developer, Java, Spring Boot, AI, Machine Learning, RAG Pipelines, LLM, React, Full Stack Developer, Khushwant Yadav',
-  ogImage = '/src/assets/images/profile.jpg',
-  canonicalUrl = 'https://khushwant-yadav.dev'
-}) => {
+const SEO: React.FC<SEOProps> = () => {
   // Uncomment the following block after installing react-helmet-async
   /*
   return (
