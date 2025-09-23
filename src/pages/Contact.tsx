@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { GoogleFormService } from '../services/googleFormService'
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -22,13 +23,25 @@ const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitStatus('idle')
     
-    // Simulate form submission (replace with actual form handling)
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      setSubmitStatus('success')
-      setFormData({ name: '', email: '', subject: '', message: '' })
+      // Submit to Google Form
+      const result = await GoogleFormService.submitForm({
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message
+      })
+
+      if (result.success) {
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', subject: '', message: '' })
+      } else {
+        setSubmitStatus('error')
+      }
     } catch (error) {
+      console.error('Form submission failed:', error)
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
@@ -172,7 +185,7 @@ const Contact: React.FC = () => {
               {submitStatus === 'success' && (
                 <div className="mb-6 p-4 bg-green-100 dark:bg-green-900/20 border border-green-500 rounded-lg">
                   <p className="text-green-800 dark:text-green-200">
-                    ✅ Thank you! Your message has been sent successfully. I'll get back to you soon.
+                    ✅ Thank you! Your message has been sent successfully via Google Forms. I'll get back to you soon.
                   </p>
                 </div>
               )}
@@ -180,7 +193,10 @@ const Contact: React.FC = () => {
               {submitStatus === 'error' && (
                 <div className="mb-6 p-4 bg-red-100 dark:bg-red-900/20 border border-red-500 rounded-lg">
                   <p className="text-red-800 dark:text-red-200">
-                    ❌ Sorry, there was an error sending your message. Please try again or contact me directly.
+                    ❌ Sorry, there was an error sending your message. Please try again or contact me directly at{' '}
+                    <a href="mailto:yadavkhushwant777@gmail.com" className="underline">
+                      yadavkhushwant777@gmail.com
+                    </a>
                   </p>
                 </div>
               )}
@@ -222,14 +238,13 @@ const Contact: React.FC = () => {
 
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Subject *
+                    Subject 
                   </label>
                   <select
                     id="subject"
                     name="subject"
                     value={formData.subject}
                     onChange={handleInputChange}
-                    required
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                   >
                     <option value="">Select a subject</option>
@@ -243,7 +258,7 @@ const Contact: React.FC = () => {
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Message *
+                    Message 
                   </label>
                   <textarea
                     id="message"
@@ -251,7 +266,6 @@ const Contact: React.FC = () => {
                     rows={6}
                     value={formData.message}
                     onChange={handleInputChange}
-                    required
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                     placeholder="Tell me about your project or how I can help you..."
                   />
